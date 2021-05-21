@@ -22,14 +22,13 @@ public class GenPersonas extends Thread{
 
     @Override
     public void run() {
-        for (int i = 1; i <= 2000; i++) {
+        for (int i = 1; i <= 10; i++) {
             try {
                 Paciente p = new Paciente("P" + i, hospital);
                 p.start();
                 sleep(new Random().nextInt(2000) + 1000);
             } catch (Exception ex) {
                 ex.toString();
-                
             }
         }
     }

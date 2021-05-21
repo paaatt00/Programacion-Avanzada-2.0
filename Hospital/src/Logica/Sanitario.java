@@ -16,13 +16,13 @@ public class Sanitario extends Thread {
     private String id;
     private int puesto, pacientesVacunados;
     private Hospital hospital;
-    
+
     public Sanitario(String id, Hospital hospital) {
         this.id = id;
         this.hospital = hospital;
         this.pacientesVacunados = 0;
     }
-    
+
     public String getIdS() {
         return id;
     }
@@ -34,23 +34,26 @@ public class Sanitario extends Thread {
     public void setPuesto(int puesto) {
         this.puesto = puesto;
     }
-    
+
     @Override
     public void run() {
         try {
             hospital.entrarSalaDescanso(this);
             sleep(new Random().nextInt(2000) + 1000);
             hospital.salirSalaDescanso(this);
-            while (true) { //crear funcion o algo que compruebe si quedan pacientes en el hospital
+            while (hospital.terminar() == false || hospital.getPacientesVacunados() == 0) {
                 hospital.entrarTrabajarVac(this);
-                while (pacientesVacunados < 15) {
-                    if ((hospital.getVacunasDisponibles() > 0) && (hospital.getSalaVacunacion()[puesto].isOcupadoP() == true)) {
-                        //pone vacuna
-                        sleep(new Random().nextInt(2000) + 3000);
-                        hospital.vacunar();
-                        pacientesVacunados++;
-                        System.out.println("El sanitario " + id + " vacuna al paciente " + hospital.getSalaVacunacion()[puesto].getPaciente().getIdP() + " en el puesto " + puesto);
-                        hospital.getSalaVacunacion()[puesto].getPaciente().setVacunado();
+                while (pacientesVacunados < 15 && (!hospital.terminar())) {
+                    sleep(1);
+                    if ((hospital.getVacunasDisponibles() > 0)) {
+                        sleep(1);
+                        if ((hospital.getSalaVacunacion()[puesto].isOcupadoP() == true)) {
+                            //pone vacuna
+                            sleep(new Random().nextInt(2000) + 3000);
+                            pacientesVacunados++;
+                            System.out.println("El sanitario " + id + " vacuna al paciente " + hospital.getSalaVacunacion()[puesto].getPaciente().getIdP() + " en el puesto " + puesto);
+                            hospital.getSalaVacunacion()[puesto].getPaciente().setVacunado();
+                        }
                     }
                 }
                 hospital.salirTrabajarVac(this);

@@ -38,15 +38,21 @@ public class Hospital {
     private Semaphore semaforoLleno = new Semaphore(10);
     private Semaphore semaforoVacio = new Semaphore(0);
     private Semaphore em = new Semaphore(1);
+    private int pacientesVacunados;
 
     public Hospital(VentanaPrincipal ventana) {
         this.ventana = ventana;
+        this.pacientesVacunados = 0;
         for (int i = 0; i < 10; i++) {
             salaVacunacion[i] = new Puesto(i);
         }
         for (int i = 0; i < 20; i++) {
             salaObservacion[i] = new Puesto(i);
         }
+    }
+
+    public ArrayList<Paciente> getColaEspera() {
+        return colaEspera;
     }
 
     public Puesto[] getSalaVacunacion() {
@@ -70,6 +76,14 @@ public class Hospital {
         return n;
     }
 
+    public Auxiliar getAuxiliar1() {
+        return auxiliar1.get(0);
+    }
+
+    public int getPacientesVacunados() {
+        return pacientesVacunados;
+    }
+
     public void anadirAuxiliar(Auxiliar a) {
         if ("A1".equals(a.getIdA())) {
             auxiliar1.add(a);
@@ -79,9 +93,15 @@ public class Hospital {
             ventana.actualizarAux(a);
         }
     }
-
-    public Auxiliar getAuxiliar1() {
-        return auxiliar1.get(0);
+    
+    public void quitarAuxiliar(Auxiliar a) {
+        if ("A1".equals(a.getIdA())) {
+            auxiliar1.add(a);
+            ventana.actualizarAux(a);
+        } else if ("A2".equals(a.getIdA())) {
+            auxiliar2.add(a);
+            ventana.actualizarAux(a);
+        }
     }
 
     public void vacunar() {
@@ -107,25 +127,18 @@ public class Hospital {
             lockVacunas.unlock();
         }
     }
-    
 
     public boolean tamano() {
         int n = 0;
         boolean sitio = false;
         lockSalaVacunacion.lock();
+        lockSalaObservacion.lock();
         try {
             for (int i = 0; i < salaVacunacion.length; i++) {
                 if (salaVacunacion[i].isOcupadoP() == true) {
                     n++;
                 }
             }
-        } catch (Exception ex) {
-            ex.toString();
-        } finally {
-            lockSalaVacunacion.unlock();
-        }
-        lockSalaObservacion.lock();
-        try {
             for (int i = 0; i < salaObservacion.length; i++) {
                 if (salaObservacion[i].isOcupadoP() == true) {
                     n++;
@@ -134,8 +147,10 @@ public class Hospital {
         } catch (Exception ex) {
             ex.toString();
         } finally {
+            lockSalaVacunacion.unlock();
             lockSalaObservacion.unlock();
         }
+
         if (n < salaObservacion.length) {
             sitio = true;
         }
@@ -200,16 +215,16 @@ public class Hospital {
     }
 
     public void entrarSalaVacunacion(Paciente p) {
-        System.out.println("Hola quiero entrar a la sala de vacunacion " + p.getIdP());
         try {
             while (auxiliar1.get(0).haySitioDisponible() == false) {
-                //System.out.println("Estoy esperando para vacunarme " + p.getIdP());
+                sleep(1);
             }
             semaforo.release();
             semaforoLleno.acquire();
             em.acquire();
             p.setIdPuestoVac(auxiliar1.get(0).quePuestoVacunacionDisponible());
             salaVacunacion[p.getIdPuestoVac()].entrarPuesto(p);
+            pacientesVacunados++;
             ventana.actualizarSalaVac(p.getIdPuestoVac(), salaVacunacion);
             System.out.println("El paciente " + p.getIdP() + " entra a vacunarse");
             em.release();
@@ -237,7 +252,7 @@ public class Hospital {
         int i = 0;
         try {
             while ((i < salaVacunacion.length)) {
-                if (!salaVacunacion[i].isOcupadoS()) {
+                if (salaVacunacion[i].isOcupadoS() == false) {
                     s.setPuesto(i);
                     salaVacunacion[i].trabajarPuesto(s);
                     ventana.actualizarSalaVac(s.getPuesto(), salaVacunacion);
@@ -247,7 +262,7 @@ public class Hospital {
             }
         } catch (Exception ex) {
             ex.toString();
-        } 
+        }
     }
 
     public void salirTrabajarVac(Sanitario s) {
@@ -259,7 +274,6 @@ public class Hospital {
         try {
             int i = 0;
             while (i < salaObservacion.length) {
-                System.out.println("hola2");
                 if ((salaObservacion[i].getListPaciente().isEmpty() == false) && (salaObservacion[i].getPaciente().isEfectosAdversos() == true)) {
                     System.out.println("El sanitario " + s.getIdS() + " entra a dar el visto bueno al paciente " + salaObservacion[i].getPaciente().getIdP() + " en el puesto " + i);
                     salaObservacion[i].trabajarPuesto(s);
@@ -313,4 +327,37 @@ public class Hospital {
         }
     }
 
+    public boolean terminar() {
+        boolean finalizar1 = true;
+        boolean finalizar2 = true;
+        boolean finalizar3 = true;
+        boolean finalizar = false;
+
+        lockEntrada.lock();
+        lockSalaVacunacion.lock();
+        lockSalaObservacion.lock();
+        try {
+            if (colaEspera.isEmpty() == false) {
+                finalizar1 = false;
+            }
+            for (int i = 0; i < salaVacunacion.length; i++) {
+                if (salaVacunacion[i].isOcupadoP() == true) {
+                    finalizar2 = false;
+                }
+            }
+            for (int i = 0; i < salaObservacion.length; i++) {
+                if (salaObservacion[i].isOcupadoP() == true) {
+                    finalizar3 = false;
+                }
+            }
+        } finally {
+            lockEntrada.unlock();
+            lockSalaVacunacion.unlock();
+            lockSalaObservacion.unlock();
+        }
+        if ((finalizar1 == true) && (finalizar2 == true) && (finalizar3 == true)) {
+            finalizar = true;
+        }
+        return finalizar;
+    }
 }

@@ -28,7 +28,6 @@ public class Auxiliar extends Thread {
 
     public void pacienteCitado(Paciente p) {
         pacientesRegistrados++;
-        System.out.println("He registrao " + pacientesRegistrados);
         System.out.println("El auxiliar " + id + " ha comprobado los datos del paciente " + p.getIdP());
         int rand = new Random().nextInt(100);
         if (rand == 1) {
@@ -68,27 +67,30 @@ public class Auxiliar extends Thread {
         try {
             if (this.id == "A1") {
                 hospital.anadirAuxiliar(this);
-                while (true) { //crear funcion o algo que compruebe si quedan pacientes en el hospital
-                    //hospital.comprobarDatos();
-                    System.out.println("voy a descansar jiijijiijijijijiijjijiijjiji");
+                while (hospital.terminar() == false || hospital.getPacientesVacunados() == 0) {                   
                     sleep(1);
                     if (pacientesRegistrados % 10 == 0) {
                         System.out.println("El auxiliar " + id + " se va a descansar");
                         sleep(new Random().nextInt(2000) + 3000);
+                        pacientesRegistrados = 0;
                     }
                 }
+              
             } else if (this.id == "A2") {
                 hospital.anadirAuxiliar(this);
-                while (true) { //crear funcion o algo que compruebe si quedan pacientes en el hospital
+                while (hospital.terminar() == false || hospital.getPacientesVacunados() == 0) {
                     hospital.anadirVacunas();
                     vacunasPreparadas++;
                     sleep(new Random().nextInt(500) + 500);
                     if (vacunasPreparadas % 20 == 0) {
                         System.out.println("El auxiliar " + id + " se va a descansar");
                         sleep(new Random().nextInt(3000) + 1000);
+                        vacunasPreparadas = 0;
                     }
                 }
+               
             }
+            System.out.println("HOla me voy " + id);
         } catch (Exception ex) {
             ex.toString();
         }

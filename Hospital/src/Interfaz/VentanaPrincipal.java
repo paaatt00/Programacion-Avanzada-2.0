@@ -140,8 +140,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public void actualizarPacienteEspera(Paciente p) {
         String texto = "";
-        texto = texto + p.getIdP();
-        paciente_espera.setText(texto);
+        if (p != null) {
+            texto = texto + p.getIdP();
+            paciente_espera.setText(texto);
+        } else {
+            paciente_espera.setText(texto);
+        }
     }
 
     public void actualizarVacunas(int n) {

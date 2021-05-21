@@ -72,6 +72,7 @@ public class Paciente extends Thread {
             if (citado == true) {
                 hospital.entrarSalaVacunacion(this);
                 while (vacunado == false) {
+                    //System.out.println("NO ESTOY VACUNADO " + id);
                     sleep(1);
                 }
                 hospital.salirSalaVacunacion(this);
