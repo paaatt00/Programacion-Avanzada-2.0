@@ -32,6 +32,5 @@ public class Main {
         aux1.start();
         Auxiliar aux2 = new Auxiliar("A2", hospital);
         aux2.start();
-        //hola
     }
 }
