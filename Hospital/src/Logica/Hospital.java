@@ -108,6 +108,7 @@ public class Hospital {
         lockVacunas.lock();
         try {
             vacunasDisponibles--;
+            System.out.println("----------------------------QUITAMOS UNA VAACUNA--------------------------------------------");
             ventana.actualizarVacunas(vacunasDisponibles);
         } catch (Exception e) {
             e.toString();

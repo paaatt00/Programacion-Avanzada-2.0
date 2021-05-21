@@ -52,6 +52,7 @@ public class Sanitario extends Thread {
                             sleep(new Random().nextInt(2000) + 3000);
                             pacientesVacunados++;
                             System.out.println("El sanitario " + id + " vacuna al paciente " + hospital.getSalaVacunacion()[puesto].getPaciente().getIdP() + " en el puesto " + puesto);
+                            hospital.vacunar();
                             hospital.getSalaVacunacion()[puesto].getPaciente().setVacunado();
                         }
                     }
