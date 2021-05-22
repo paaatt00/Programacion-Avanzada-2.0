@@ -72,14 +72,13 @@ public class Paciente extends Thread {
             if (citado == true) {
                 hospital.entrarSalaVacunacion(this);
                 while (vacunado == false) {
-                    //System.out.println("NO ESTOY VACUNADO " + id);
                     sleep(1);
                 }
                 hospital.salirSalaVacunacion(this);
                 hospital.entrarSalaObservacion(this);
                 sleep(10000);
                 int rand = new Random().nextInt(100);
-                if (rand < 5) {
+                if (rand < 10) {
                     efectosAdversos = true;
                     System.out.println("Al paciente " + id + " la vacuna le ha producido efectos adversos");
                 }
@@ -92,6 +91,6 @@ public class Paciente extends Thread {
             }
         } catch (InterruptedException ex) {
             ex.toString();
-        }
+        }        
     }
 }

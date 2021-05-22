@@ -43,7 +43,7 @@ public class Sanitario extends Thread {
             hospital.salirSalaDescanso(this);
             while (hospital.terminar() == false || hospital.getPacientesVacunados() == 0) {
                 hospital.entrarTrabajarVac(this);
-                while (pacientesVacunados < 15 && (!hospital.terminar())) {
+                while (pacientesVacunados < 15 && hospital.comprobarObservacion() == false && (hospital.terminar() == false)) {
                     sleep(1);
                     if ((hospital.getVacunasDisponibles() > 0)) {
                         sleep(1);
@@ -51,7 +51,7 @@ public class Sanitario extends Thread {
                             //pone vacuna
                             sleep(new Random().nextInt(2000) + 3000);
                             pacientesVacunados++;
-                            System.out.println("El sanitario " + id + " vacuna al paciente " + hospital.getSalaVacunacion()[puesto].getPaciente().getIdP() + " en el puesto " + puesto);
+                            System.out.println("El sanitario " + id + " vacuna al paciente " + hospital.getSalaVacunacion()[puesto].getPaciente().getIdP() + " en el puesto " + (puesto + 1));
                             hospital.vacunar();
                             hospital.getSalaVacunacion()[puesto].getPaciente().setVacunado();
                         }
@@ -67,7 +67,7 @@ public class Sanitario extends Thread {
                 hospital.trabajarObs(this);
             }
         } catch (Exception e) {
-            e.toString();
-        }
+            e.toString();           
+        }  
     }
 }

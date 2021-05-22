@@ -87,13 +87,11 @@ public class Auxiliar extends Thread {
                         sleep(new Random().nextInt(3000) + 1000);
                         vacunasPreparadas = 0;
                     }
-                }
-               
-            }
-            System.out.println("HOla me voy " + id);
+                }               
+            }            
         } catch (Exception ex) {
             ex.toString();
-        }
+        } 
     }
 
 }

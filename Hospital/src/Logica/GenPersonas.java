@@ -12,8 +12,8 @@ import java.util.Random;
  *
  * @author Patricia
  */
-public class GenPersonas extends Thread{
-    
+public class GenPersonas extends Thread {
+
     private Hospital hospital;
 
     public GenPersonas(Hospital hospital) {
@@ -22,15 +22,19 @@ public class GenPersonas extends Thread{
 
     @Override
     public void run() {
-        for (int i = 1; i <= 10; i++) {
-            try {
-                Paciente p = new Paciente("P" + i, hospital);
-                p.start();
-                sleep(new Random().nextInt(2000) + 1000);
-            } catch (Exception ex) {
-                ex.toString();
+        try {
+            for (int i = 1; i <= 2000; i++) {
+                try {
+                    Paciente p = new Paciente("P" + i, hospital);
+                    p.start();
+                    sleep(new Random().nextInt(2000) + 1000);
+                } catch (Exception ex) {
+                    ex.toString();
+                }
             }
-        }
+
+        } catch (Exception ex) {
+            ex.toString();
+        }        
     }
-    
 }

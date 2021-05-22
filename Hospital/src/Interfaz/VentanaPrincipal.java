@@ -152,6 +152,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         String texto = String.valueOf(n);
         this.vacunas_disponibles.setText(texto);
     }
+    
+    public void terminarProgramaVentana () {
+        this.dispose();
+        System.exit(0);        
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

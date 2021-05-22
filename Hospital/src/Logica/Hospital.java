@@ -10,6 +10,9 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import Interfaz.VentanaPrincipal;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.util.Random;
 
@@ -37,10 +40,13 @@ public class Hospital {
     private Semaphore semaforo = new Semaphore(1);
     private Semaphore semaforoLleno = new Semaphore(10);
     private Semaphore semaforoVacio = new Semaphore(0);
+    private Semaphore semaforoSalaObs = new Semaphore(1);
     private Semaphore em = new Semaphore(1);
     private int pacientesVacunados;
+    private FileWriter archivo;
+    private BufferedWriter bw;
 
-    public Hospital(VentanaPrincipal ventana) {
+    public Hospital(VentanaPrincipal ventana) throws IOException {
         this.ventana = ventana;
         this.pacientesVacunados = 0;
         for (int i = 0; i < 10; i++) {
@@ -49,6 +55,19 @@ public class Hospital {
         for (int i = 0; i < 20; i++) {
             salaObservacion[i] = new Puesto(i);
         }
+        GenPersonas gen = new GenPersonas(this);
+        gen.start();
+        for (int i = 1; i <= 10; i++) {
+            Sanitario s = new Sanitario("S" + i, this);
+            s.start();
+        }
+        Auxiliar aux1 = new Auxiliar("A1", this);
+        aux1.start();
+        Auxiliar aux2 = new Auxiliar("A2", this);
+        aux2.start();
+        String ruta = "archivo.txt";
+        archivo = new FileWriter(ruta);
+        bw = new BufferedWriter(archivo);
     }
 
     public ArrayList<Paciente> getColaEspera() {
@@ -93,7 +112,7 @@ public class Hospital {
             ventana.actualizarAux(a);
         }
     }
-    
+
     public void quitarAuxiliar(Auxiliar a) {
         if ("A1".equals(a.getIdA())) {
             auxiliar1.add(a);
@@ -108,7 +127,6 @@ public class Hospital {
         lockVacunas.lock();
         try {
             vacunasDisponibles--;
-            System.out.println("----------------------------QUITAMOS UNA VAACUNA--------------------------------------------");
             ventana.actualizarVacunas(vacunasDisponibles);
         } catch (Exception e) {
             e.toString();
@@ -272,7 +290,9 @@ public class Hospital {
     }
 
     public void trabajarObs(Sanitario s) {
+        lockSalaObservacion.lock();
         try {
+            semaforoSalaObs.acquire();
             int i = 0;
             while (i < salaObservacion.length) {
                 if ((salaObservacion[i].getListPaciente().isEmpty() == false) && (salaObservacion[i].getPaciente().isEfectosAdversos() == true)) {
@@ -287,8 +307,11 @@ public class Hospital {
                 }
                 i++;
             }
+            semaforoSalaObs.release();
         } catch (Exception ex) {
             ex.toString();
+        } finally {
+            lockSalaObservacion.unlock();
         }
     }
 
@@ -318,14 +341,51 @@ public class Hospital {
     public void salirSalaObservacion(Paciente p) {
         lockSalaObservacion.lock();
         try {
+            semaforoSalaObs.acquire();
             salaObservacion[p.getIdPuestoObs()].salirPuesto(p);
             ventana.actualizarSalaObs(p.getIdPuestoObs(), salaObservacion);
             System.out.println("El paciente " + p.getIdP() + " sale de observacion");
+            semaforoSalaObs.release();
         } catch (Exception e) {
             e.toString();
         } finally {
             lockSalaObservacion.unlock();
         }
+    }
+    
+    public boolean comprobarObservacion () {
+        boolean finalizar1 = true;
+        boolean finalizar2 = true;
+        boolean finalizar3 = true;
+        boolean finalizar = false;
+
+        lockEntrada.lock();
+        lockSalaVacunacion.lock();
+        lockSalaObservacion.lock();
+        try {
+            if (colaEspera.isEmpty() == false) {
+                finalizar1 = false;
+            }
+            for (int i = 0; i < salaVacunacion.length; i++) {
+                if (salaVacunacion[i].isOcupadoP() == true) {
+                    finalizar2 = false;
+                }
+            }
+            for (int i = 0; i < salaObservacion.length; i++) {
+                if (salaObservacion[i].isOcupadoP() == true && salaObservacion[i].getPaciente().isEfectosAdversos() == false) {
+                    finalizar3 = false;
+                }
+            }
+        } finally {
+            lockEntrada.unlock();
+            lockSalaVacunacion.unlock();
+            lockSalaObservacion.unlock();
+        }
+        if ((finalizar1 == true) && (finalizar2 == true) && (finalizar3 == true)) {
+            finalizar = true;
+        }
+        return finalizar;
+    
     }
 
     public boolean terminar() {
@@ -361,4 +421,52 @@ public class Hospital {
         }
         return finalizar;
     }
+
+    public boolean cerrarHospital() {
+        boolean finalizar1 = true;
+        boolean finalizar2 = true;
+        boolean finalizar3 = true;
+        boolean finalizar4 = true;
+        boolean finalizar = false;
+
+        lockEntrada.lock();
+        lockSalaVacunacion.lock();
+        lockSalaObservacion.lock();
+        lockSalaDescanso.lock();
+
+        try {
+            if (colaEspera.isEmpty() == false) {
+                finalizar1 = false;
+            }
+            for (int i = 0; i < salaVacunacion.length; i++ ) {
+                if (salaVacunacion[i].isOcupadoP() == true || salaVacunacion[i].isOcupadoS() == true) {
+                    finalizar2 = false;
+                }
+            }
+            for (int i = 0; i < salaObservacion.length; i++) {
+                if (salaObservacion[i].isOcupadoP() == true || salaObservacion[i].isOcupadoS() == true) {
+                    finalizar3 = false;
+                }
+            }
+            if (salaDescanso.isEmpty() == false) {
+                finalizar4 = false;
+            }
+        } catch (Exception ex){
+            ex.toString();
+        } finally {
+            lockEntrada.unlock();
+            lockSalaVacunacion.unlock();
+            lockSalaObservacion.unlock();
+            lockSalaDescanso.unlock();
+        }
+        if ((finalizar1 == true) && (finalizar2 == true) && (finalizar3 == true) && (finalizar4 == true)) {
+            finalizar = true;                       
+        }
+        return finalizar;
+        
+    }
+     public void cerrarVentana () {
+         ventana.terminarProgramaVentana(); 
+     } 
+
 }

@@ -6,6 +6,7 @@
 package Logica;
 
 import Interfaz.VentanaPrincipal;
+import java.io.IOException;
 
 /**
  *
@@ -16,21 +17,20 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        
         VentanaPrincipal ventana = new VentanaPrincipal();
         ventana.setVisible(true);
         Hospital hospital = new Hospital(ventana);
-        GenPersonas gen = new GenPersonas(hospital);
-        gen.start();
-        for (int i = 1; i <= 10; i++) {
-            Sanitario s = new Sanitario("S" + i, hospital);
-            s.start();
+        
+
+        boolean aux = true;
+        while (aux) {
+            if (hospital.cerrarHospital() == true) {
+                hospital.cerrarVentana();
+                aux = false;
+            }
         }
-        Auxiliar aux1 = new Auxiliar("A1", hospital);
-        aux1.start();
-        Auxiliar aux2 = new Auxiliar("A2", hospital);
-        aux2.start();
     }
+
 }
