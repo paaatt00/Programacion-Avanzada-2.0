@@ -23,7 +23,6 @@ public class Sanitario extends Thread {
     private Date date;
     DateFormat dateFormat;
     
-
     public Sanitario(String id, Hospital hospital) {
         this.id = id;
         this.hospital = hospital;

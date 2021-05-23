@@ -27,7 +27,6 @@ public class Hospital {
 
     private VentanaPrincipal ventana;
     private ArrayList<Paciente> colaEspera = new ArrayList<>();
-
     private ArrayList<Auxiliar> auxiliar1 = new ArrayList<>();
     private ArrayList<Auxiliar> auxiliar2 = new ArrayList<>();
     private Puesto salaVacunacion[] = new Puesto[10];
@@ -394,7 +393,6 @@ public class Hospital {
         boolean finalizar2 = true;
         boolean finalizar3 = true;
         boolean finalizar = false;
-
         lockEntrada.lock();
         lockSalaVacunacion.lock();
         lockSalaObservacion.lock();
@@ -429,7 +427,6 @@ public class Hospital {
         boolean finalizar2 = true;
         boolean finalizar3 = true;
         boolean finalizar = false;
-
         lockEntrada.lock();
         lockSalaVacunacion.lock();
         lockSalaObservacion.lock();
@@ -464,12 +461,10 @@ public class Hospital {
         boolean finalizar3 = true;
         boolean finalizar4 = true;
         boolean finalizar = false;
-
         lockEntrada.lock();
         lockSalaVacunacion.lock();
         lockSalaObservacion.lock();
         lockSalaDescanso.lock();
-
         try {
             if (colaEspera.isEmpty() == false) {
                 finalizar1 = false;
@@ -505,7 +500,6 @@ public class Hospital {
         bw.close();
         System.out.println("---------------------------");
         ventana.terminarProgramaVentana();
-
     }
 
     public void escribirTxt(String s) throws IOException {
@@ -518,5 +512,4 @@ public class Hospital {
             lockTxt.unlock();
         }
     }
-
 }

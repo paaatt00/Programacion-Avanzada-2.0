@@ -22,7 +22,6 @@ public class Main {
         VentanaPrincipal ventana = new VentanaPrincipal();
         ventana.setVisible(true);
         Hospital hospital = new Hospital(ventana);
-        
 
         boolean aux = true;
         while (aux) {
@@ -32,5 +31,4 @@ public class Main {
             }
         }
     }
-
 }
