@@ -21,7 +21,7 @@ import java.util.Random;
 
 /**
  *
- * @author Patricia
+ * @author Patricia e Isabel
  */
 public class Hospital {
 

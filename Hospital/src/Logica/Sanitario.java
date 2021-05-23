@@ -13,7 +13,7 @@ import java.util.Random;
 
 /**
  *
- * @author Patricia
+ * @author Patricia e Isabel
  */
 public class Sanitario extends Thread {
 
@@ -76,7 +76,6 @@ public class Sanitario extends Thread {
                 hospital.salirSalaDescanso(this);
                 //comprobar si hay algun paciente con reaccion
                 hospital.trabajarObs(this);
-
             }
         } catch (Exception e) {
             e.toString();           

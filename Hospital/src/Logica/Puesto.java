@@ -6,11 +6,10 @@
 package Logica;
 
 import java.util.ArrayList;
-import Interfaz.VentanaPrincipal;
 
 /**
  *
- * @author Patricia
+ * @author Patricia e Isabel
  */
 public class Puesto {
     

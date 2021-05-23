@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Patricia
+ * @author Patricia e Isabel
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 

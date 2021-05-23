@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Patricia
+ * @author Patricia e Isabel
  */
 public class Main {
 

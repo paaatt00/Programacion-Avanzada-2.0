@@ -14,7 +14,7 @@ import java.util.Random;
 
 /**
  *
- * @author Patricia
+ * @author Patricia e Isabel
  */
 public class Auxiliar extends Thread {
 
@@ -111,5 +111,4 @@ public class Auxiliar extends Thread {
             ex.toString();
         } 
     }
-
 }
