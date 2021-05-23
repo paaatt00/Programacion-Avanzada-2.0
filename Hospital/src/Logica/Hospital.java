@@ -118,16 +118,6 @@ public class Hospital {
         }
     }
 
-    public void quitarAuxiliar(Auxiliar a) {
-        if ("A1".equals(a.getIdA())) {
-            auxiliar1.add(a);
-            ventana.actualizarAux(a);
-        } else if ("A2".equals(a.getIdA())) {
-            auxiliar2.add(a);
-            ventana.actualizarAux(a);
-        }
-    }
-
     public void vacunar() {
         lockVacunas.lock();
         try {
