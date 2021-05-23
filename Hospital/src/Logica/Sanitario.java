@@ -5,6 +5,10 @@
  */
 package Logica;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -16,11 +20,15 @@ public class Sanitario extends Thread {
     private String id;
     private int puesto, pacientesVacunados;
     private Hospital hospital;
+    private Date date;
+    DateFormat dateFormat;
+    
 
     public Sanitario(String id, Hospital hospital) {
         this.id = id;
         this.hospital = hospital;
         this.pacientesVacunados = 0;
+        dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
     }
 
     public String getIdS() {
@@ -52,10 +60,13 @@ public class Sanitario extends Thread {
                             sleep(new Random().nextInt(2000) + 3000);
                             pacientesVacunados++;
                             System.out.println("El sanitario " + id + " vacuna al paciente " + hospital.getSalaVacunacion()[puesto].getPaciente().getIdP() + " en el puesto " + (puesto + 1));
+                            date = Calendar.getInstance().getTime();  
+                            String strDate = dateFormat.format(date);
+                            hospital.escribirTxt(strDate + " El sanitario " + id + " vacuna al paciente " + hospital.getSalaVacunacion()[puesto].getPaciente().getIdP() + " en el puesto " + (puesto + 1) + "\n");
                             hospital.vacunar();
                             hospital.getSalaVacunacion()[puesto].getPaciente().setVacunado();
                         }
-                    }
+                    } 
                 }
                 hospital.salirTrabajarVac(this);
                 this.pacientesVacunados = 0;
@@ -65,6 +76,7 @@ public class Sanitario extends Thread {
                 hospital.salirSalaDescanso(this);
                 //comprobar si hay algun paciente con reaccion
                 hospital.trabajarObs(this);
+
             }
         } catch (Exception e) {
             e.toString();           

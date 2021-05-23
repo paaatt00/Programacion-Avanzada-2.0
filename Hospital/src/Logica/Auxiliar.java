@@ -5,6 +5,11 @@
  */
 package Logica;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -16,25 +21,32 @@ public class Auxiliar extends Thread {
     private String id;
     private int pacientesRegistrados = 0, vacunasPreparadas = 0;
     private Hospital hospital;
+    Date date; 
+    DateFormat dateFormat;
 
     public Auxiliar(String id, Hospital hospital) {
         this.id = id;
         this.hospital = hospital;
+        dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");  
     }
 
     public String getIdA() {
         return id;
     }
 
-    public void pacienteCitado(Paciente p) {
+    public void pacienteCitado(Paciente p) throws IOException {
         pacientesRegistrados++;
-        System.out.println("El auxiliar " + id + " ha comprobado los datos del paciente " + p.getIdP());
+        System.out.println("El auxiliar " + id + " ha comprobado los datos del paciente " + p.getIdP());        
+        date = Calendar.getInstance().getTime();
+        String strDate = dateFormat.format(date);          
+        hospital.escribirTxt(strDate + " El auxiliar " + id + " ha comprobado los datos del paciente " + p.getIdP() + "\n");
         int rand = new Random().nextInt(100);
         if (rand == 1) {
             p.setCitado(false);
         } else {
             p.setCitado(true);
         }
+        
     }
 
     public boolean haySitioDisponible() {
@@ -71,6 +83,9 @@ public class Auxiliar extends Thread {
                     sleep(1);
                     if (pacientesRegistrados % 10 == 0) {
                         System.out.println("El auxiliar " + id + " se va a descansar");
+                        date = Calendar.getInstance().getTime();
+                        String strDate = dateFormat.format(date);  
+                        hospital.escribirTxt(strDate + " El auxiliar " + id + " se va a descansar\n");
                         sleep(new Random().nextInt(2000) + 3000);
                         pacientesRegistrados = 0;
                     }
@@ -84,6 +99,9 @@ public class Auxiliar extends Thread {
                     sleep(new Random().nextInt(500) + 500);
                     if (vacunasPreparadas % 20 == 0) {
                         System.out.println("El auxiliar " + id + " se va a descansar");
+                        date = Calendar.getInstance().getTime();
+                        String strDate = dateFormat.format(date);  
+                        hospital.escribirTxt(strDate + " El auxiliar " + id + " se va a descansar\n");
                         sleep(new Random().nextInt(3000) + 1000);
                         vacunasPreparadas = 0;
                     }

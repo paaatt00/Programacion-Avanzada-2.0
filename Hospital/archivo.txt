@@ -1,0 +1,142 @@
+2021-23-23 01:23:40 El sanitario S2 entra a la sala de descanso
+2021-23-23 01:23:40 El sanitario S3 entra a la sala de descanso
+2021-23-23 01:23:40 El sanitario S4 entra a la sala de descanso
+2021-23-23 01:23:40 El sanitario S5 entra a la sala de descanso
+2021-23-23 01:23:40 El sanitario S6 entra a la sala de descanso
+2021-23-23 01:23:40 El sanitario S7 entra a la sala de descanso
+2021-23-23 01:23:40 El sanitario S8 entra a la sala de descanso
+2021-23-23 01:23:40 El sanitario S9 entra a la sala de descanso
+2021-23-23 01:23:40 El sanitario S10 entra a la sala de descanso
+2021-23-23 01:23:40 El auxiliar A1 ha comprobado los datos del paciente P1
+2021-23-23 01:23:41 El sanitario S5 sale de la sala de descanso
+2021-23-23 01:23:41 El sanitario S5 entra a la sala de descanso
+2021-23-23 01:23:41 El sanitario S1 sale de la sala de descanso
+2021-23-23 01:23:41 El sanitario S1 entra a la sala de descanso
+2021-23-23 01:23:41 El sanitario S10 sale de la sala de descanso
+2021-23-23 01:23:41 El sanitario S10 entra a la sala de descanso
+2021-23-23 01:23:41 El sanitario S4 sale de la sala de descanso
+2021-23-23 01:23:41 El sanitario S4 entra a la sala de descanso
+2021-23-23 01:23:41 El sanitario S9 sale de la sala de descanso
+2021-23-23 01:23:41 El sanitario S9 entra a la sala de descanso
+2021-23-23 01:23:41 El paciente P2 ha entrado al hospital
+2021-23-23 01:23:42 El sanitario S3 sale de la sala de descanso
+2021-23-23 01:23:42 El auxiliar A1 ha comprobado los datos del paciente P2
+2021-23-23 01:23:42 El paciente P1 entra a vacunarse
+2021-23-23 01:23:42 El sanitario S8 sale de la sala de descanso
+2021-23-23 01:23:42 El paciente P2 entra a vacunarse
+2021-23-23 01:23:42 El sanitario S6 sale de la sala de descanso
+2021-23-23 01:23:42 El sanitario S7 sale de la sala de descanso
+2021-23-23 01:23:42 El sanitario S2 sale de la sala de descanso
+2021-23-23 01:23:43 El paciente P3 ha entrado al hospital
+2021-23-23 01:23:43 El auxiliar A1 ha comprobado los datos del paciente P3
+2021-23-23 01:23:43 El paciente P3 entra a vacunarse
+2021-23-23 01:23:45 El sanitario S3 vacuna al paciente P1 en el puesto 1
+2021-23-23 01:23:45 El paciente P1 sale de vacunarse
+2021-23-23 01:23:45 El paciente P1 entra a observacion
+2021-23-23 01:23:45 El paciente P4 ha entrado al hospital
+2021-23-23 01:23:45 El auxiliar A1 ha comprobado los datos del paciente P4
+2021-23-23 01:23:45 El paciente P4 entra a vacunarse
+2021-23-23 01:23:46 El sanitario S8 vacuna al paciente P2 en el puesto 2
+2021-23-23 01:23:46 El paciente P2 sale de vacunarse
+2021-23-23 01:23:46 El paciente P2 entra a observacion
+2021-23-23 01:23:46 El paciente P5 ha entrado al hospital
+2021-23-23 01:23:46 El auxiliar A1 ha comprobado los datos del paciente P5
+2021-23-23 01:23:46 El paciente P5 entra a vacunarse
+2021-23-23 01:23:48 El sanitario S10 sale de la sala de descanso
+2021-23-23 01:23:48 El sanitario S6 vacuna al paciente P3 en el puesto 3
+2021-23-23 01:23:48 El paciente P3 sale de vacunarse
+2021-23-23 01:23:48 El paciente P3 entra a observacion
+2021-23-23 01:23:48 El sanitario S4 sale de la sala de descanso
+2021-23-23 01:23:48 El sanitario S1 sale de la sala de descanso
+2021-23-23 01:23:49 El sanitario S5 sale de la sala de descanso
+2021-23-23 01:23:49 El sanitario S3 vacuna al paciente P4 en el puesto 1
+2021-23-23 01:23:49 El paciente P4 sale de vacunarse
+2021-23-23 01:23:49 El paciente P4 entra a observacion
+2021-23-23 01:23:49 El sanitario S9 sale de la sala de descanso
+2021-23-23 01:23:49 El paciente P6 ha entrado al hospital
+2021-23-23 01:23:49 El auxiliar A1 ha comprobado los datos del paciente P6
+2021-23-23 01:23:49 El paciente P6 entra a vacunarse
+2021-23-23 01:23:50 El sanitario S8 vacuna al paciente P5 en el puesto 2
+2021-23-23 01:23:50 El paciente P5 sale de vacunarse
+2021-23-23 01:23:50 El paciente P5 entra a observacion
+2021-23-23 01:23:51 El paciente P7 ha entrado al hospital
+2021-23-23 01:23:51 El auxiliar A1 ha comprobado los datos del paciente P7
+2021-23-23 01:23:51 El paciente P7 entra a vacunarse
+2021-23-23 01:23:53 El paciente P8 ha entrado al hospital
+2021-23-23 01:23:53 El auxiliar A1 ha comprobado los datos del paciente P8
+2021-23-23 01:23:53 El paciente P8 entra a vacunarse
+2021-23-23 01:23:53 El sanitario S3 vacuna al paciente P6 en el puesto 1
+2021-23-23 01:23:53 El paciente P6 sale de vacunarse
+2021-23-23 01:23:53 El paciente P6 entra a observacion
+2021-23-23 01:23:54 El paciente P9 ha entrado al hospital
+2021-23-23 01:23:54 El auxiliar A1 ha comprobado los datos del paciente P9
+2021-23-23 01:23:54 El paciente P9 entra a vacunarse
+2021-23-23 01:23:55 Al paciente P1 la vacuna le ha producido efectos adversos
+2021-23-23 01:23:55 El auxiliar A2 se va a descansar
+2021-23-23 01:23:56 El sanitario S8 vacuna al paciente P7 en el puesto 2
+2021-23-23 01:23:56 El paciente P7 sale de vacunarse
+2021-23-23 01:23:56 El paciente P7 entra a observacion
+2021-23-23 01:23:56 El paciente P2 sale de observacion
+2021-23-23 01:23:57 El paciente P10 ha entrado al hospital
+2021-23-23 01:23:57 El auxiliar A1 ha comprobado los datos del paciente P10
+2021-23-23 01:23:57 El paciente P10 entra a vacunarse
+2021-23-23 01:23:57 El auxiliar A1 se va a descansar
+2021-23-23 01:23:57 El sanitario S6 vacuna al paciente P8 en el puesto 3
+2021-23-23 01:23:57 El paciente P8 sale de vacunarse
+2021-23-23 01:23:57 El paciente P8 entra a observacion
+2021-23-23 01:23:58 Al paciente P3 la vacuna le ha producido efectos adversos
+2021-23-23 01:23:59 Al paciente P4 la vacuna le ha producido efectos adversos
+2021-23-23 01:23:59 El sanitario S3 vacuna al paciente P9 en el puesto 1
+2021-23-23 01:23:59 El paciente P9 sale de vacunarse
+2021-23-23 01:23:59 El paciente P9 entra a observacion
+2021-24-23 01:24:00 Al paciente P5 la vacuna le ha producido efectos adversos
+2021-24-23 01:24:01 El sanitario S8 vacuna al paciente P10 en el puesto 2
+2021-24-23 01:24:01 El paciente P10 sale de vacunarse
+2021-24-23 01:24:01 El paciente P10 entra a observacion
+2021-24-23 01:24:01 El auxiliar A1 se va a descansar
+2021-24-23 01:24:03 Al paciente P6 la vacuna le ha producido efectos adversos
+2021-24-23 01:24:05 El auxiliar A1 se va a descansar
+2021-24-23 01:24:06 Al paciente P7 la vacuna le ha producido efectos adversos
+2021-24-23 01:24:07 Al paciente P8 la vacuna le ha producido efectos adversos
+2021-24-23 01:24:08 El auxiliar A1 se va a descansar
+2021-24-23 01:24:09 El paciente P9 sale de observacion
+2021-24-23 01:24:11 Al paciente P10 la vacuna le ha producido efectos adversos
+2021-24-23 01:24:11 El sanitario S7 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S4 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S6 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S5 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S8 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S1 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S3 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S10 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S2 entra a la sala de descanso
+2021-24-23 01:24:11 El sanitario S9 entra a la sala de descanso
+2021-24-23 01:24:12 El auxiliar A1 se va a descansar
+2021-24-23 01:24:13 El auxiliar A2 se va a descansar
+2021-24-23 01:24:16 El auxiliar A1 se va a descansar
+2021-24-23 01:24:17 El sanitario S3 sale de la sala de descanso
+2021-24-23 01:24:17 El sanitario S3 entra a dar el visto bueno al paciente P1 en el puesto 1
+2021-24-23 01:24:17 El sanitario S2 sale de la sala de descanso
+2021-24-23 01:24:18 El sanitario S4 sale de la sala de descanso
+2021-24-23 01:24:18 El sanitario S1 sale de la sala de descanso
+2021-24-23 01:24:18 El sanitario S10 sale de la sala de descanso
+2021-24-23 01:24:18 El sanitario S6 sale de la sala de descanso
+2021-24-23 01:24:18 El sanitario S8 sale de la sala de descanso
+2021-24-23 01:24:18 El sanitario S7 sale de la sala de descanso
+2021-24-23 01:24:19 El sanitario S5 sale de la sala de descanso
+2021-24-23 01:24:19 El sanitario S9 sale de la sala de descanso
+2021-24-23 01:24:20 El sanitario S2 entra a dar el visto bueno al paciente P8 en el puesto 2
+2021-24-23 01:24:23 El sanitario S4 entra a dar el visto bueno al paciente P3 en el puesto 3
+2021-24-23 01:24:26 El sanitario S1 entra a dar el visto bueno al paciente P4 en el puesto 4
+2021-24-23 01:24:30 El sanitario S10 entra a dar el visto bueno al paciente P5 en el puesto 5
+2021-24-23 01:24:34 El sanitario S6 entra a dar el visto bueno al paciente P6 en el puesto 6
+2021-24-23 01:24:39 El sanitario S8 entra a dar el visto bueno al paciente P7 en el puesto 7
+2021-24-23 01:24:43 El sanitario S7 entra a dar el visto bueno al paciente P10 en el puesto 9
+2021-24-23 01:24:46 El paciente P1 sale de observacion
+2021-24-23 01:24:46 El paciente P8 sale de observacion
+2021-24-23 01:24:46 El paciente P3 sale de observacion
+2021-24-23 01:24:46 El paciente P4 sale de observacion
+2021-24-23 01:24:46 El paciente P5 sale de observacion
+2021-24-23 01:24:46 El paciente P6 sale de observacion
+2021-24-23 01:24:46 El paciente P7 sale de observacion
+2021-24-23 01:24:46 El paciente P10 sale de observacion

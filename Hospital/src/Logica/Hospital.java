@@ -7,13 +7,16 @@ package Logica;
 
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import Interfaz.VentanaPrincipal;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -36,7 +39,7 @@ public class Hospital {
     private ReentrantLock lockSalaDescanso = new ReentrantLock();
     private ReentrantLock lockSalaVacunacion = new ReentrantLock();
     private ReentrantLock lockSalaObservacion = new ReentrantLock();
-    private Condition salaVacunacionLlena = lockSalaVacunacion.newCondition();
+    private ReentrantLock lockTxt = new ReentrantLock();
     private Semaphore semaforo = new Semaphore(1);
     private Semaphore semaforoLleno = new Semaphore(10);
     private Semaphore semaforoVacio = new Semaphore(0);
@@ -45,6 +48,8 @@ public class Hospital {
     private int pacientesVacunados;
     private FileWriter archivo;
     private BufferedWriter bw;
+    private Date date;
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 
     public Hospital(VentanaPrincipal ventana) throws IOException {
         this.ventana = ventana;
@@ -67,7 +72,8 @@ public class Hospital {
         aux2.start();
         String ruta = "archivo.txt";
         archivo = new FileWriter(ruta);
-        bw = new BufferedWriter(archivo);
+        bw = new BufferedWriter(archivo);        
+        
     }
 
     public ArrayList<Paciente> getColaEspera() {
@@ -180,8 +186,13 @@ public class Hospital {
         lockEntrada.lock();
         try {
             System.out.println("El paciente " + p.getIdP() + " ha entrado al hospital");
+            date = Calendar.getInstance().getTime();
+            String strDate = dateFormat.format(date);
+            bw.write(strDate + " El paciente " + p.getIdP() + " ha entrado al hospital\n");
             colaEspera.add(p);
             ventana.actualizarColaEspera(colaEspera);
+        } catch (Exception ex) {
+            ex.toString();
         } finally {
             lockEntrada.unlock();
         }
@@ -215,8 +226,13 @@ public class Hospital {
         lockSalaDescanso.lock();
         try {
             System.out.println("El sanitario " + s.getIdS() + " entra a la sala de descanso");
+            date = Calendar.getInstance().getTime();
+            String strDate = dateFormat.format(date);
+            bw.write(strDate + " El sanitario " + s.getIdS() + " entra a la sala de descanso\n");
             salaDescanso.add(s);
             ventana.actualizarSalaDesc(salaDescanso);
+        } catch (Exception ex) {
+            ex.toString();
         } finally {
             lockSalaDescanso.unlock();
         }
@@ -226,8 +242,13 @@ public class Hospital {
         lockSalaDescanso.lock();
         try {
             System.out.println("El sanitario " + s.getIdS() + " sale de la sala de descanso");
+            date = Calendar.getInstance().getTime();
+            String strDate = dateFormat.format(date);
+            escribirTxt(strDate + " El sanitario " + s.getIdS() + " sale de la sala de descanso\n");
             salaDescanso.remove(s);
             ventana.actualizarSalaDesc(salaDescanso);
+        } catch (Exception ex) {
+            ex.toString();
         } finally {
             lockSalaDescanso.unlock();
         }
@@ -246,6 +267,9 @@ public class Hospital {
             pacientesVacunados++;
             ventana.actualizarSalaVac(p.getIdPuestoVac(), salaVacunacion);
             System.out.println("El paciente " + p.getIdP() + " entra a vacunarse");
+            date = Calendar.getInstance().getTime();
+            String strDate = dateFormat.format(date);
+            bw.write(strDate + " El paciente " + p.getIdP() + " entra a vacunarse\n");
             em.release();
             semaforoVacio.release();
         } catch (Exception ex) {
@@ -260,6 +284,9 @@ public class Hospital {
             salaVacunacion[p.getIdPuestoVac()].salirPuesto(p);
             ventana.actualizarSalaVac(p.getIdPuestoVac(), salaVacunacion);
             System.out.println("El paciente " + p.getIdP() + " sale de vacunarse");
+            date = Calendar.getInstance().getTime();
+            String strDate = dateFormat.format(date);
+            escribirTxt(strDate + " El paciente " + p.getIdP() + " sale de vacunarse\n");
             em.release();
             semaforoLleno.release();
         } catch (Exception ex) {
@@ -296,7 +323,10 @@ public class Hospital {
             int i = 0;
             while (i < salaObservacion.length) {
                 if ((salaObservacion[i].getListPaciente().isEmpty() == false) && (salaObservacion[i].getPaciente().isEfectosAdversos() == true)) {
-                    System.out.println("El sanitario " + s.getIdS() + " entra a dar el visto bueno al paciente " + salaObservacion[i].getPaciente().getIdP() + " en el puesto " + i);
+                    System.out.println("El sanitario " + s.getIdS() + " entra a dar el visto bueno al paciente " + salaObservacion[i].getPaciente().getIdP() + " en el puesto " + (i + 1));
+                    date = Calendar.getInstance().getTime();
+                    String strDate = dateFormat.format(date);
+                    bw.write(strDate + " El sanitario " + s.getIdS() + " entra a dar el visto bueno al paciente " + salaObservacion[i].getPaciente().getIdP() + " en el puesto " + (i + 1) + "\n");
                     salaObservacion[i].trabajarPuesto(s);
                     ventana.actualizarSalaObs(i, salaObservacion);
                     sleep(new Random().nextInt(3000) + 2000);
@@ -330,6 +360,9 @@ public class Hospital {
             p.setIdPuestoObs(posicion);
             salaObservacion[p.getIdPuestoObs()].entrarPuesto(p);
             System.out.println("El paciente " + p.getIdP() + " entra a observacion");
+            date = Calendar.getInstance().getTime();
+            String strDate = dateFormat.format(date);
+            escribirTxt(strDate + " El paciente " + p.getIdP() + " entra a observacion\n");
             ventana.actualizarSalaObs(p.getIdPuestoObs(), salaObservacion);
         } catch (Exception ex) {
             ex.toString();
@@ -345,6 +378,9 @@ public class Hospital {
             salaObservacion[p.getIdPuestoObs()].salirPuesto(p);
             ventana.actualizarSalaObs(p.getIdPuestoObs(), salaObservacion);
             System.out.println("El paciente " + p.getIdP() + " sale de observacion");
+            date = Calendar.getInstance().getTime();
+            String strDate = dateFormat.format(date);
+            escribirTxt(strDate + " El paciente " + p.getIdP() + " sale de observacion\n");
             semaforoSalaObs.release();
         } catch (Exception e) {
             e.toString();
@@ -352,8 +388,8 @@ public class Hospital {
             lockSalaObservacion.unlock();
         }
     }
-    
-    public boolean comprobarObservacion () {
+
+    public boolean comprobarObservacion() {
         boolean finalizar1 = true;
         boolean finalizar2 = true;
         boolean finalizar3 = true;
@@ -385,7 +421,7 @@ public class Hospital {
             finalizar = true;
         }
         return finalizar;
-    
+
     }
 
     public boolean terminar() {
@@ -438,7 +474,7 @@ public class Hospital {
             if (colaEspera.isEmpty() == false) {
                 finalizar1 = false;
             }
-            for (int i = 0; i < salaVacunacion.length; i++ ) {
+            for (int i = 0; i < salaVacunacion.length; i++) {
                 if (salaVacunacion[i].isOcupadoP() == true || salaVacunacion[i].isOcupadoS() == true) {
                     finalizar2 = false;
                 }
@@ -451,7 +487,7 @@ public class Hospital {
             if (salaDescanso.isEmpty() == false) {
                 finalizar4 = false;
             }
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.toString();
         } finally {
             lockEntrada.unlock();
@@ -460,13 +496,27 @@ public class Hospital {
             lockSalaDescanso.unlock();
         }
         if ((finalizar1 == true) && (finalizar2 == true) && (finalizar3 == true) && (finalizar4 == true)) {
-            finalizar = true;                       
+            finalizar = true;
         }
         return finalizar;
-        
     }
-     public void cerrarVentana () {
-         ventana.terminarProgramaVentana(); 
-     } 
+
+    public void cerrarVentana() throws IOException {
+        bw.close();
+        System.out.println("---------------------------");
+        ventana.terminarProgramaVentana();
+
+    }
+
+    public void escribirTxt(String s) throws IOException {
+        lockTxt.lock();
+        try {
+            bw.write(s);
+        } catch (Exception ex) {
+            ex.toString();
+        } finally {
+            lockTxt.unlock();
+        }
+    }
 
 }
